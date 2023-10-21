@@ -46,7 +46,7 @@ public class SaveDataServlet extends HttpServlet {
         	}
         } catch (Exception e) {
             e.printStackTrace();
-            // Handle errors here
+            // All errors
         }
 
         // Redirect the user back to the UI or a confirmation page
