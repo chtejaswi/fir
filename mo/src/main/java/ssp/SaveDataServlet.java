@@ -24,6 +24,7 @@ public class SaveDataServlet extends HttpServlet {
         try {
         	//Treating the sevak id as string :2014-179-2321
         	String sevakId = request.getParameter("sevak-id");
+        	String examname = request.getParameter("exam-name");
         	double fineAmount = Double.parseDouble(request.getParameter("fineamount"));
         	String transactionDate = request.getParameter("transaction_date");
         	String transactionDetails = request.getParameter("transactiondetails");       	
@@ -39,10 +40,10 @@ public class SaveDataServlet extends HttpServlet {
         	    // Data for the given sevakId already exists, so have a count +1
         	    int count = resultSet.getInt("existingcount");
         	    count+=1;
-        	    execute(conn,sevakId,fineAmount,transactionDate,transactionDetails,count);
+        	    execute(conn,sevakId,examname,fineAmount,transactionDate,transactionDetails,count);
         	}else {    
         		//New entry if there is no entry existing in our sevak_db
-        		execute(conn,sevakId,fineAmount,transactionDate,transactionDetails,1);
+        		execute(conn,sevakId,examname,fineAmount,transactionDate,transactionDetails,1);
         	}
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,14 +54,15 @@ public class SaveDataServlet extends HttpServlet {
         response.sendRedirect("confirmation.jsp"); 
     }
     
-    protected void execute(Connection conn,String sevakId,Double fineAmount,String transactionDate,String transactionDetails,int count) throws SQLException {
-    	String insertQuery = "INSERT INTO data (sevak_id, fine_amount, transaction_date, transaction_details, count) VALUES (?, ?, ?, ?, ?)";
+    protected void execute(Connection conn,String sevakId,String examname,Double fineAmount,String transactionDate,String transactionDetails,int count) throws SQLException {
+    	String insertQuery = "INSERT INTO data (sevak_id, exam_name, fine_amount, transaction_date, transaction_details, count) VALUES (?, ?, ?, ?, ?, ?)";
 	    PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
 	    preparedStatement.setString(1, sevakId);
-	    preparedStatement.setDouble(2, fineAmount);
-	    preparedStatement.setDate(3, java.sql.Date.valueOf(transactionDate));
-	    preparedStatement.setString(4, transactionDetails);
-	    preparedStatement.setInt(5, count);
+	    preparedStatement.setString(2, examname);
+	    preparedStatement.setDouble(3, fineAmount);
+	    preparedStatement.setDate(4, java.sql.Date.valueOf(transactionDate));
+	    preparedStatement.setString(5, transactionDetails);
+	    preparedStatement.setInt(6, count);
 	    preparedStatement.executeUpdate();
     	conn.close();  	
     }

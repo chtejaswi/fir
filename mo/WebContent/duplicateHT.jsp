@@ -17,6 +17,7 @@
 <body>
     <form action="SaveDataServlet" method="post">
         Sevak ID: <input type="text" name="sevak-id"><br>
+        Exam Name: <input type="text" name="exam-name"><br>
         Fine Amount: <input type="text" name="fineamount"><br>
         <label for="transaction_date">Transaction Date:</label>
         Date: <input type="text" id="transaction_date" name="transaction_date"><br>
